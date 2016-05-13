@@ -32,6 +32,13 @@ int board[DIM_MAX][DIM_MAX];
 // dimensions
 int d;
 
+// location of empty space in matrix (indexed 0)
+int spaceR, spaceC;
+
+// location of tile in matrix (indexed 0)
+int tileR, tileC;
+
+
 // prototypes
 void clear(void);
 void greet(void);
@@ -39,6 +46,7 @@ void init(void);
 void draw(void);
 bool move(int tile);
 bool won(void);
+bool search(int tile, int board[DIM_MAX][DIM_MAX], int n);
 
 int main(int argc, string argv[])
 {
@@ -203,7 +211,26 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // TODO
+    if (search(tile, board, d))
+    {
+        if ( (((spaceR+1) == tileR) && (spaceC == tileC)) ||\
+             ((spaceR == tileR) && ((spaceC-1) == tileC)) ||\
+             (((spaceR-1) == tileR) && (spaceC == tileC)) ||\
+             ((spaceR == tileR) && ((spaceC+1) == tileC)) \
+            )
+        {
+            
+                // swap the space and tile values
+                board[spaceR][spaceC] = board[tileR][tileC];
+                board[tileR][tileC] = -1; // assigning empty space
+                
+                // set new space location
+                spaceR = tileR;
+                spaceC = tileC;
+                return true;
+            
+        }
+    }
     return false;
 }
 
@@ -214,5 +241,23 @@ bool move(int tile)
 bool won(void)
 {
     // TODO
+    return false;
+}
+
+bool search(int tile, int board[DIM_MAX][DIM_MAX], int n)
+{
+    // implementation of linear search algorithm
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (board[i][j] == tile)
+            {
+                   tileR = i;
+                   tileC = j;
+                   return true;
+            }
+        }
+    }
     return false;
 }
