@@ -8,7 +8,6 @@
  */
        
 #include <cs50.h>
-
 #include "helpers.h"
 
 /**
@@ -16,14 +15,30 @@
  */
 bool search(int value, int values[], int n)
 {
-    // implementation of linear search algorithm
+    // implementation of binary search algorithm
     if (!(value >=  0)) // return false if value not even
         return false;
-    for (int i = 0; i < n; i++)
+
+    int low = 0, high = n-1, middle = (n-1)/2;
+ 
+    while (high >= low)
     {
-        if (values[i] == value)
+        if (values[middle] == value)
         {
             return true;
+        }
+        else 
+        {
+            if (values[middle] > value)
+            {
+                high = middle - 1;
+            }
+            else
+            {
+                low = middle + 1;
+            }
+
+            middle = (low + high)/2;
         }
     }
     return false;
@@ -47,5 +62,6 @@ void sort(int values[], int n)
            }
         }
     }
+    
     return;
 }
