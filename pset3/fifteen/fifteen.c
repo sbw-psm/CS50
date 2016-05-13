@@ -159,7 +159,24 @@ void greet(void)
  */
 void init(void)
 {
-    // TODO
+    // initializing the board   
+    for (int i = 0, n = (d*d)-1; i < d; i++)
+    {
+        for (int j = 0; j < d; j++)
+        {
+            board[i][j] = n;
+            n--;
+        }
+    }
+    board[d-1][d-1] = -1;
+    spaceR = d-1;
+    spaceC = d-1;
+    // if number of tiles are odd then swap tiles 1 and 2
+    if ((d^2-1)%2 != 0)
+    {
+        board[d-1][d-3] = 1;
+        board[d-1][d-2] = 2;
+    }
 }
 
 /**
