@@ -176,7 +176,7 @@ void init(void)
             n--;
         }
     }
-    board[d-1][d-1] = -1;
+    board[d-1][d-1] = 0;
     spaceR = d-1;
     spaceC = d-1;
     // if number of tiles are odd then swap tiles 1 and 2
@@ -196,7 +196,7 @@ void draw(void)
     {
         for (int j=0; j < d; j++)
         {
-            if (board[i][j] == -1)
+            if (board[i][j] == 0)
                 printf(" _");
             else
                 printf("%2i", board[i][j]);
@@ -222,7 +222,7 @@ bool move(int tile)
             
                 // swap the space and tile values
                 board[spaceR][spaceC] = board[tileR][tileC];
-                board[tileR][tileC] = -1; // assigning empty space
+                board[tileR][tileC] = 0; // assigning empty space
                 
                 // set new space location
                 spaceR = tileR;
@@ -240,10 +240,30 @@ bool move(int tile)
  */
 bool won(void)
 {
-    // TODO
+    // check if the empty space is at the bottom-right corner
+    if (board[d-1][d-1] == 0)
+    {
+        // check if the board’s tiles are arranged from smallest to largest,
+        // left to right, top to bottom
+        for (int i = 0, n = 1; i < d; i++)
+        {
+            for (int j = 0; j < d; j++)
+            {
+                if (board[i][j] != n)
+                {
+                    return false;
+                }
+                n++;
+            }
+        }
+        return true;
+    }
     return false;
 }
 
+/**
+ * Returns true if value is in array of n values, else false.
+ */
 bool search(int tile, int board[DIM_MAX][DIM_MAX], int n)
 {
     // implementation of linear search algorithm
