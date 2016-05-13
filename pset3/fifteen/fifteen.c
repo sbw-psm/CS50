@@ -249,8 +249,10 @@ bool won(void)
         {
             for (int j = 0; j < d; j++)
             {
-                if (board[i][j] != n)
+                if (board[i][j] != n && board[i][j] != 0)
                 {
+                    if (board[i][j] == 0)
+                        return true;
                     return false;
                 }
                 n++;
